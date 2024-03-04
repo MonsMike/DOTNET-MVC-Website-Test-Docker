@@ -1,0 +1,26 @@
+@model IEnumerable<WeatherForecast>
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html lang="">
+<head>
+    <title>Weather Report</title>
+</head>
+<body>
+<h1>Weather Forecast</h1>
+<h4 style="font-style: italic;">Calls the backend Weather API</h4>
+
+@foreach (var wf in Model)
+{
+    <div style="border: 1px solid gray; padding: 5px;">
+        <b>Date:</b> @wf.Date.ToLongDateString()<br/>
+        <b>Temperature:</b> @wf.TemperatureF<br/>
+        <b>Summary:</b> @wf.Summary
+    </div>
+}
+</body>
+</html>
