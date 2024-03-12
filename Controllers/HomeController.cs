@@ -9,7 +9,7 @@ namespace MVCWebsiteTest_Docker.Controllers;
 public class HomeController(ILogger<HomeController> logger) : Controller
 {
     private readonly ILogger<HomeController> _logger = logger;
-
+    
     public IActionResult Index()
     {
         return View();
@@ -17,8 +17,11 @@ public class HomeController(ILogger<HomeController> logger) : Controller
     
     public IActionResult Weather()
     {
-        const string weatherApiBase = "https://backend-dotnet-webapi-test.onrender.com/";
-
+        //var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var weatherApiBase = Environment.GetEnvironmentVariable("API_URL");
+        if (string.IsNullOrEmpty(weatherApiBase))
+            return NotFound("Missing API URL");
+        
         var results = Helper.GetApi(weatherApiBase, "WeatherForecast");
         var weatherList = JsonSerializer.Deserialize<List<WeatherForecast>>(results, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         
