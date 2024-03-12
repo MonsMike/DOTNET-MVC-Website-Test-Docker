@@ -17,8 +17,8 @@ public class HomeController(ILogger<HomeController> logger) : Controller
     
     public IActionResult Weather()
     {
-        //var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-        var weatherApiBase = Environment.GetEnvironmentVariable("API_URL");
+        var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+        var weatherApiBase = Environment.GetEnvironmentVariable("API_URL") ?? config["API_URL"];
         if (string.IsNullOrEmpty(weatherApiBase))
             return NotFound("Missing API URL");
         
